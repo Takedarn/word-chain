@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+<h1>WordChain-game</h1>
+<!--現在の単語を表示する場所-->
+<p id="previousWord"></p>
+<!--次に入力すべき単語の先頭文字表示する場所-->
+<p id="nextWordHead"></p>
+<!--次の文字を入力するフォーム-->
+<input autocomplete="off" class="form-control"  id="nextWordInput" type="text">
+<div class="form-text">ひらがなで入力してください</div>
+<!--送信ボタン-->
+<button type="button" class="btn btn-outline-primary btn-sm mt-3" id="nextWordSendButton">送信</button>
+<!--手札に追加ボタン-->
+<button type="button" class="btn btn-outline-primary btn-sm mt-3" id="addtoKeepingButton">手札に追加</button>
+
+<!--ゲーム中断ボタン-->
+<button type="button" id="gameResetbutton" class="btn btn-outline-danger btn-sm mt-3">ゲームリセット</button>
+
+<!--プレイヤー順番を知らせるためのアテンションインフォメーション-->
+<div id="NowGamePlayer" class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+    今は<strong>プレイヤー1</strong>のゲームターンです！
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<!--手札を表示する-->
+<p id="tefuda-info">使用したい手札をクリック！</p>
+<span class="badge text-bg-success" style="margin: 8px 8px 8px 0">あなたの手札一覧</span>
+<!--手札本体-->
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+</div>
+
+<!--JSファイルを外部ファイルとして読み込む-->
+<script src="js/index.js"></script>
+</body>
+</html>
