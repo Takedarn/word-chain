@@ -84,7 +84,6 @@ tefudaItems.forEach(function(item) {
 });
 
 
-
 // 送信ボタン押下時に実行
 document.querySelector("#nextWordSendButton").onclick = async(event) => {
     // inputタグを取得
@@ -109,11 +108,6 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
         const errorJson = await response.text();
         const errorobj = JSON.parse(errorJson);
         alert(errorobj["errorMessage"]);
-        // 入力フォームの値をクリア
-        document.getElementById('nextWordInput').value = "";
-        // 表示をクリア
-        document.getElementById('previousWord').innerHTML = `前の単語: しりとり`;
-        document.getElementById('nextWordHead').innerHTML = `次の先頭文字: り`;
     }
 
     const previousWord = await response.text();

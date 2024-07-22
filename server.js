@@ -3,21 +3,64 @@ import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 // 直前の単語を保持しておくリスト
 let previousWords = ["しりとり"];
 
+// 入力の末尾が濁点or半濁音かチェックするためのベース
+const dakutenCheckMap = ['が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ', 'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ'];
+const handakuonCheckMap = ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'];
+const baseHiraganaMap = {
+    'が': 'か',
+    'ぎ': 'き',
+    'ぐ': 'く',
+    'げ': 'け',
+    'ご': 'こ',
+    'ざ': 'さ',
+    'じ': 'し',
+    'ず': 'す',
+    'ぜ': 'せ',
+    'ぞ': 'そ',
+    'だ': 'た',
+    'ぢ': 'ち',
+    'づ': 'つ',
+    'で': 'て',
+    'ど': 'と',
+    'ば': 'は',
+    'び': 'ひ',
+    'ぶ': 'ふ',
+    'べ': 'へ',
+    'ぼ': 'ほ',
+    'ぱ': 'は',
+    'ぴ': 'ひ',
+    'ぷ': 'ふ',
+    'ぺ': 'へ',
+    'ぽ': 'ほ'
+};
+
+
 // サーバーの展開
 Deno.serve(async (request) => {
     const pathname = new URL(request.url).pathname;
     console.log(`pathname: ${pathname}`);
 
+
     if (request.method === "GET" && pathname === "/shiritori") {
         return new Response(previousWords[previousWords.length - 1]);
     }
 
+
     if (request.method === "POST" && pathname === "/shiritori") {
         const requestJson = await request.json();
         let nextWord = requestJson["nextWord"];
+        // 変更箇所
+        let previousWordLastChar = previousWords[previousWords.length - 1].slice(-1);
+        let nextWordFirstChar = nextWord.slice(0, 1);
+
+        // 　濁音および半濁音チェック
+        let allowedChars = [previousWordLastChar];
+        if (dakutenCheckMap.includes(previousWordLastChar) || handakuonCheckMap.includes(previousWordLastChar)) {
+            previousWordLastChar = baseHiraganaMap[previousWordLastChar];
+        }
 
         // previousWordの末尾とNextWordの先頭の一文字を比較する(一致した場合)
-        if (previousWords[previousWords.length - 1].slice(-1) === nextWord.slice(0, 1)) {
+        if (previousWordLastChar === nextWordFirstChar || allowedChars.includes(nextWordFirstChar)) {
             // 末尾が「ん」: ゲームオーバー
             if (nextWord.slice(-1) === "ん") {
                 return new Response(
