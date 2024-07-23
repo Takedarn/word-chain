@@ -31,6 +31,19 @@ function updatePlayerTurnAlert() {
     updatePlayerHand();
 }
 
+
+// サーバーから前の単語を取得し、表示を更新する関数
+async function fetchPreviousWord() {
+    const response = await fetch("/shiritori", { method: "GET" });
+    const previousWord = await response.text();
+    document.querySelector("#previousWord").innerText = `前の単語: ${previousWord}`;
+    document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
+}
+
+window.onload = async () => {
+    await fetchPreviousWord();
+}
+
 window.onload = async (event) => {
     // GET /shiritoriを実行
     const response = await fetch("/shiritori", { method: "GET" });
@@ -120,6 +133,9 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
     }
 
     const previousWord = await response.text();
+    document.querySelector("#previousWord").innerHTML = `前の単語: ${previousWord}`;
+    document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
+    nextWordInput.value = "";
 
     // プレイヤーをトグル
     NowPlayerFlag = !NowPlayerFlag;
