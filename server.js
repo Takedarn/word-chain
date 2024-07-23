@@ -49,7 +49,6 @@ Deno.serve(async (request) => {
     if (request.method === "POST" && pathname === "/shiritori") {
         const requestJson = await request.json();
         let nextWord = requestJson["nextWord"];
-        // 変更箇所
         let previousWordLastChar = previousWords[previousWords.length - 1].slice(-1);
         let nextWordFirstChar = nextWord.slice(0, 1);
 

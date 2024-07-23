@@ -63,21 +63,15 @@ https://harukitaked-wordchain-52-31j342rsjvc3.deno.dev/
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
-このリポジトリをクローンしたあとディレクトリ内で以下のコマンドを実行：
+リポジトリをクローンした後、ディレクトリ内で以下のコマンドを実行：
 ```
 deno run --allow-net --watch server.js
 ```
-localhostにサーバが立ち上がるのでterminal内に表示されたリンクにアクセスしてください。
+localhostにサーバが立ち上がるのでterminal内に表示されたリンクから開いて下さい。
 
 #### ローカル環境では日本語辞書の会員登録(無料)が必要です。
 API Keyの取得が必要であり、そのためには会員登録をする必要があります。
 https://www.apibank.jp/ApiBank/service/use-guide#ugJoinStart
-
-
-
-
-
-
 
 ## 参考にしたWebサイト
 - BootStrap document
