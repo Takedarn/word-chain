@@ -6,6 +6,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+<style>
+    .progress-bar {
+        font-weight: bold;
+    }
+</style>
 <body>
 <h1>WordChain-game</h1>
 <!--デバック用表示-->
@@ -27,6 +32,16 @@
 <div id="NowGamePlayer" class="alert alert-warning fade show mt-3" role="alert">
     今は<strong>プレイヤー1</strong>のゲームターンです！
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!--playerのHPを表示する-->
+<span class="badge text-bg-success" style="margin: 8px 8px 8px 0">あなたの現在のHP</span>
+<div id="player-card" style="
+    background-color: #ffffff;
+    border: 2px solid #efefef;
+    width: auto;
+    height: 80px;
+    display: block;
+    border-radius: 5px;">
 </div>
 <!--手札を表示する-->
 <p id="tefuda-info" style="font-size: 14px; margin: 0;">使用したい手札をクリック！</p>
