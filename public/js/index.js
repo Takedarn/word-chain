@@ -1,4 +1,4 @@
-// プレヤー情報を保持するための変数定義
+// プレイヤー情報を保持するための変数定義
 // true = プレイヤー1, false = プレイヤー2
 let NowPlayerFlag = true;
 
@@ -24,7 +24,6 @@ function updatePlayerHand() {
     document.getElementById('player2-hand').classList.toggle('d-none', NowPlayerFlag);
 }
 
-
 // プレイヤー表示を更新する関数
 function updatePlayerTurnAlert() {
     const playerTurnAlert = document.getElementById('NowGamePlayer');
@@ -41,8 +40,10 @@ window.onload = async (event) => {
     const paragraph = document.querySelector("#previousWord");
     // 取得したタグの中身を書き換える
     paragraph.innerHTML = `前の単語: ${previousWord}`;
+    // 次に入力すべき文字を設定
+    const nextWordHead = document.querySelector("#nextWordHead");
+    nextWordHead.innerHTML = `次の先頭文字: ${previousWord.slice(-1)}`;
 }
-
 
 // ゲームリセットボタン押下時にリセット実行
 document.getElementById('gameResetbutton').addEventListener('click', async function() {
@@ -60,7 +61,6 @@ document.getElementById('gameResetbutton').addEventListener('click', async funct
     player2Hand.length = 0;
     updatePlayerHand();
 });
-
 
 // 手札に追加ボタン押下時に実行
 document.getElementById('addtoKeepingButton').addEventListener('click', function() {
@@ -82,7 +82,6 @@ document.getElementById('addtoKeepingButton').addEventListener('click', function
     }
 });
 
-
 // 手札リストの要素をクリックしたときに、そのテキストを入力フォームに挿入する
 const tefudaItems = document.querySelectorAll('.list-group-item');
 tefudaItems.forEach(function(item) {
@@ -93,7 +92,6 @@ tefudaItems.forEach(function(item) {
         }
     });
 });
-
 
 // 送信ボタン押下時に実行
 document.querySelector("#nextWordSendButton").onclick = async(event) => {
@@ -113,24 +111,24 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
         }
     );
 
-    // プレイヤーをトグル
-    NowPlayerFlag = !NowPlayerFlag;
-    updatePlayerTurnAlert();
-
-    // status: 200以外が帰ってきた場合にエラーを表示
+    // status: 200以外が帰ってきた場合にエラーを表示し、プレイヤーを切り替えない
     if (response.status !== 200) {
         const errorJson = await response.text();
         const errorobj = JSON.parse(errorJson);
         alert(errorobj["errorMessage"]);
+        return;  // ここで処理を終了し、プレイヤーの切り替えや手札の更新を行わない
     }
 
     const previousWord = await response.text();
+
+    // プレイヤーをトグル
+    NowPlayerFlag = !NowPlayerFlag;
+    updatePlayerTurnAlert();
 
     // id: previousWordのタグを取得
     const paragraph = document.querySelector("#previousWord");
     // 取得したタグの中身を書き換える
     paragraph.innerHTML = `前の単語: ${previousWord}`;
-
 
     // id: nextWordHeadのタグ取得
     const nextWord = document.querySelector("#nextWordHead");
