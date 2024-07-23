@@ -59,6 +59,21 @@ Deno.serve(async (request) => {
             previousWordLastChar = baseHiraganaMap[previousWordLastChar];
         }
 
+        // 入力が空だった場合のエラーをアラートする
+        if (nextWord.trim() === "") {
+            return new Response(
+                JSON.stringify({
+                    "errorMessage": "入力が空です。単語を入力してください。",
+                    "errorCode": "10003",
+                }),
+                {
+                    status: 400,
+                    headers: {"Content-Type": "application/json; charset=utf-8"}
+                }
+            );
+        }
+
+        // 入力が空ではない
         // previousWordの末尾とNextWordの先頭の一文字を比較する(一致した場合)
         if (previousWordLastChar === nextWordFirstChar || allowedChars.includes(nextWordFirstChar)) {
             // 末尾が「ん」: ゲームオーバー
@@ -108,10 +123,8 @@ Deno.serve(async (request) => {
 
             // 上記の条件を全てパスした場合: 正しい入力としてリストに追加する
             previousWords.push(nextWord);
-
-
-
-        } else {　 // previousWordの末尾とNextWordの先頭の一文字を比較する(一致しない場合)
+        } else {　
+            // previousWordの末尾とNextWordの先頭の一文字を比較する(一致しない場合)
             return new Response(
                 JSON.stringify({
                     "errorMessage": `前の単語に続いていません！`,
