@@ -10,6 +10,8 @@
 <body>
 <h1>WordChain-game</h1>
 <!--現在の単語を表示する場所-->
+<p id="nowplayervalue">現在のプレイヤ変数の値：</p>
+<!--現在の単語を表示する場所-->
 <p id="previousWord"></p>
 <!--次に入力すべき単語の先頭文字表示する場所-->
 <p id="nextWordHead"></p>
@@ -34,7 +36,14 @@
 <p id="tefuda-info">使用したい手札をクリック！</p>
 <span class="badge text-bg-success" style="margin: 8px 8px 8px 0">あなたの手札一覧</span>
 <!--手札本体-->
-<div class="list-group">
+<!--プレイヤー1の手札-->
+<div id="player1-hand" class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+    <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
+</div>
+<!--プレイヤー2の手札-->
+<div id="player2-hand" class="list-group d-none">
     <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
     <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>
     <a href="#" class="list-group-item list-group-item-action">ここに手札をセットできます。</a>

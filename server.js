@@ -1,7 +1,8 @@
 import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
 // 直前の単語を保持しておくリスト
-let previousWords = ["しりとり"];
+let previousWords = ["しりとり"]
+
 
 // 入力の末尾が濁点or半濁音かチェックするためのベース
 const dakutenCheckMap = ['が', 'ぎ', 'ぐ', 'げ', 'ご', 'ざ', 'じ', 'ず', 'ぜ', 'ぞ', 'だ', 'ぢ', 'づ', 'で', 'ど', 'ば', 'び', 'ぶ', 'べ', 'ぼ'];
@@ -107,6 +108,8 @@ Deno.serve(async (request) => {
 
             // 上記の条件を全てパスした場合: 正しい入力としてリストに追加する
             previousWords.push(nextWord);
+
+
 
         } else {　 // previousWordの末尾とNextWordの先頭の一文字を比較する(一致しない場合)
             return new Response(
