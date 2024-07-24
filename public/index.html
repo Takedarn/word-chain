@@ -12,6 +12,36 @@
     }
 </style>
 <body>
+
+<!--モーダルウィンドウ-->
+<div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false"　tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">プレイヤー名の入力</h5>
+            </div>
+            <div class="modal-body">
+                <!--モーダルウィンドウの中身-->
+                <form>
+                    <!--プレイヤー1-->
+                    <div class="mb-3">
+                        <label for="inputPlayerName" class="form-label">player 1</label>
+                        <input class="form-control" type="text" placeholder="名前を入力" aria-label="default input example">
+                    </div>
+                    <!--プレイヤー2-->
+                    <div class="mb-3">
+                        <label for="inputPlayerName" class="form-label">player 2</label>
+                        <input class="form-control" type="text" placeholder="名前を入力" aria-label="default input example">
+                    </div>
+                    <!--ゲームスタートボタン-->
+                    <a class="btn btn-success" href="#" role="button">ゲームスタート</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <h1>WordChain-game</h1>
 <!--デバック用表示-->
 <p id="nowplayervalue"></p>
@@ -35,14 +65,9 @@
 </div>
 <!--playerのHPを表示する-->
 <span class="badge text-bg-success" style="margin: 8px 8px 8px 0">あなたの現在のHP</span>
-<div id="player-card" style="
-    background-color: #ffffff;
-    border: 2px solid #efefef;
-    width: auto;
-    height: 20px;
-    display: block;
-    border-radius: 5px;">
-</div>
+<p id="player1HP">プレイヤー1のHP: 100</p>
+<p id="player2HP">プレイヤー2のHP: 100</p>
+
 <!--手札を表示する-->
 <span class="badge text-bg-success" style="margin: 8px 8px 8px 0">あなたの手札一覧</span>
 <p id="tefuda-info" style="font-size: 14px; margin: 0;">使用したい手札をクリック！</p>

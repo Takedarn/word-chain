@@ -1,3 +1,8 @@
+// 変数定義
+// 入力時間を記録するためのタイマー
+let timer;
+let startTime;
+
 // プレイヤー情報を保持するための変数定義
 // false = プレイヤー1, true = プレイヤー2
 let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からスタートする
@@ -5,6 +10,12 @@ let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からス�
 // プレイヤーごとの手札を保持する変数
 const player1Hand = [];
 const player2Hand = [];
+
+// ページ作筋にモーダルウィンドウを表示する
+document.addEventListener('DOMContentLoaded', function () {
+    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    myModal.show();
+});
 
 // 手札の表示を更新する関数
 function updatePlayerHand() {
@@ -170,4 +181,3 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
     // inputタグの中身を消去する
     nextWordInput.value = "";
 }
-

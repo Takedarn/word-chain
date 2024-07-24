@@ -14,3 +14,8 @@ html {
 body {
     background: #f9f9f9;
 }
+
+/* モーダル外をクリックしても拡大しないようにする */
+.modal-static .modal-dialog {
+    transform: scale(1) !important;
+}
