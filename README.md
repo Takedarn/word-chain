@@ -54,10 +54,7 @@ https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 入力フォームに入力された単語をしりとりゲームの入力として許すことを考えた。
 
 
-## アプリの動作確認の方法（WebサイトのURLや、セットアップを含めたアプリケーションの実行手順等）
-基本的には以下のURLにアクセスすることで利用できます。
-https://harukitaked-wordchain-52-31j342rsjvc3.deno.dev/
-
+## アプリの動作確認の方法（WebサイトのURLや、セットアップを含めたアプリケーションの実行手順等
 ### ローカル環境への動かし方
 #### Denoのインストール
 ```
