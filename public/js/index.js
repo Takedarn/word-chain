@@ -1,11 +1,6 @@
 // プレイヤー情報を保持するための変数定義
 // false = プレイヤー1, true = プレイヤー2
-let NowPlayerFlag = false;
-
-// debag:
-const NowP = document.querySelector("#nowplayervalue");
-NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
-
+let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からスタートする
 
 // プレイヤーごとの手札を保持する変数
 const player1Hand = [];
@@ -28,8 +23,7 @@ function updatePlayerHand() {
 // プレイヤー表示を更新する関数
 function updatePlayerTurnAlert() {
     const playerTurnAlert = document.getElementById('NowGamePlayer');
-    playerTurnAlert.innerHTML = `今は<strong>プレイヤー${NowPlayerFlag ? 1 : 2}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
-    updatePlayerHand();
+    playerTurnAlert.innerHTML = `今は<strong>プレイヤー${NowPlayerFlag ? 2 : 1}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
 }
 
 
@@ -48,6 +42,12 @@ window.onload = async () => {
 window.onload = async (event) => {
     // GET /shiritoriを実行
     const response = await fetch("/shiritori", { method: "GET" });
+
+    // debag:
+    const NowP = document.querySelector("#nowplayervalue");
+    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
+
+
     // responseの中からレスポンスのテキストデータを取得
     const previousWord = await response.text();
     // id: previousWordのタグを取得
@@ -73,11 +73,17 @@ document.getElementById('gameResetbutton').addEventListener('click', async funct
     updatePlayerHand();
     // リセットを通知する
     alert('リセットボタンが押されたのでゲームをリセットします！');
+    // ゲームプレイヤーのリセット
     NowPlayerFlag = false;
     // 表示をリセット
     document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
     document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
     updatePlayerTurnAlert();
+
+
+    // debag:
+    const NowP = document.querySelector("#nowplayervalue");
+    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 });
 
 // 手札に追加ボタン押下時に実行
@@ -119,6 +125,10 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
     // プレイヤーをトグル
     NowPlayerFlag = !NowPlayerFlag;
     updatePlayerTurnAlert();
+
+    // debag:
+    const NowP = document.querySelector("#nowplayervalue");
+    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 
 
     // POST /shiritoriを実行
