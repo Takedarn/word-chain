@@ -1,10 +1,11 @@
 // プレイヤー情報を保持するための変数定義
-// true = プレイヤー1, false = プレイヤー2
-let NowPlayerFlag = true;
+// false = プレイヤー1, true = プレイヤー2
+let NowPlayerFlag = false;
 
 // debag:
 const NowP = document.querySelector("#nowplayervalue");
 NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
+
 
 // プレイヤーごとの手札を保持する変数
 const player1Hand = [];
@@ -56,6 +57,8 @@ window.onload = async (event) => {
     // 次に入力すべき文字を設定
     const nextWordHead = document.querySelector("#nextWordHead");
     nextWordHead.innerHTML = `次の先頭文字: ${previousWord.slice(-1)}`;
+    // 入力フォームのプレースホルダーに次の先頭文字を表示
+    await fetchPreviousWord();
 }
 
 // ゲームリセットボタン押下時にリセット実行
@@ -64,15 +67,17 @@ document.getElementById('gameResetbutton').addEventListener('click', async funct
     await fetch("/reset", { method: "POST" });
     // 入力フォームの値をクリア
     document.getElementById('nextWordInput').value = "";
-    // リセットを通知する
-    alert('リセットボタンが押されたのでゲームをリセットします！')
-    // 表示をリセット
-    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
-    document.getElementById('nextWordHead').innerHTML = "次の先頭文字: り";
-    // リセット時に手札も初期化
+    // 手札の初期化
     player1Hand.length = 0;
     player2Hand.length = 0;
     updatePlayerHand();
+    // リセットを通知する
+    alert('リセットボタンが押されたのでゲームをリセットします！');
+    NowPlayerFlag = false;
+    // 表示をリセット
+    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
+    document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
+    updatePlayerTurnAlert();
 });
 
 // 手札に追加ボタン押下時に実行
@@ -80,15 +85,12 @@ document.getElementById('addtoKeepingButton').addEventListener('click', function
     const nextWord = document.getElementById('nextWordInput').value.trim();
     if (nextWord) {
         const handList = NowPlayerFlag ? player1Hand : player2Hand;
-
         // リストの先頭に新しい単語を追加
         handList.unshift(nextWord);
-
         // リストの長さが3つを超えた場合は、最も古い要素を削除する
         if (handList.length > 3) {
             handList.pop();
         }
-
         // 手札の表示を更新
         document.getElementById('nextWordInput').value = '';
         updatePlayerHand();
@@ -106,12 +108,18 @@ tefudaItems.forEach(function(item) {
     });
 });
 
+
 // 送信ボタン押下時に実行
 document.querySelector("#nextWordSendButton").onclick = async(event) => {
     // inputタグを取得
     const nextWordInput = document.querySelector("#nextWordInput");
     // inputの中身を取得
     const nextWordInputText = nextWordInput.value;
+
+    // プレイヤーをトグル
+    NowPlayerFlag = !NowPlayerFlag;
+    updatePlayerTurnAlert();
+
 
     // POST /shiritoriを実行
     // 次の単語をresponseに格納
@@ -137,9 +145,6 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
     document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
     nextWordInput.value = "";
 
-    // プレイヤーをトグル
-    NowPlayerFlag = !NowPlayerFlag;
-    updatePlayerTurnAlert();
 
     // id: previousWordのタグを取得
     const paragraph = document.querySelector("#previousWord");
@@ -152,8 +157,5 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
     nextWord.innerHTML = `次の先頭文字: ${previousWord.slice(-1)}`;
     // inputタグの中身を消去する
     nextWordInput.value = "";
-
-    // debag:
-    const NowP = document.querySelector("#nowplayervalue");
-    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 }
+
