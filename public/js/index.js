@@ -147,6 +147,8 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
         const errorJson = await response.text();
         const errorobj = JSON.parse(errorJson);
         alert(errorobj["errorMessage"]);
+        // 入力フォームを初期化する
+        nextWordInput.value = "";
         return;  // ここで処理を終了し、プレイヤーの切り替えや手札の更新を行わない
     }
 

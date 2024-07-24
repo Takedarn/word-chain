@@ -108,6 +108,9 @@ Deno.serve(async (request) => {
             if (previousWords.includes(nextWord)) {
                 // ゲームオーバーなのでしりとりの履歴リストを初期化
                 previousWords = ["しりとり"];
+                // 入力フォームの値を初期化
+
+
                 return new Response(
                     JSON.stringify({
                         "errorMessage": "この単語は既に使われています。ゲームオーバー！" +
