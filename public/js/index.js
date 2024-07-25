@@ -62,7 +62,6 @@ function startGame() {
     // その他の初期化処理があればここに追加
 }
 
-
 // HP表示を更新する関数
 function updateHPDisplay() {
     document.getElementById('player1HP').innerText = `プレイヤー1のHP: ${player1HP}`;
@@ -90,7 +89,6 @@ function updatePlayerTurnAlert() {
     const player2Name = localStorage.getItem('player2Name') || 'プレイヤー2';
     playerTurnAlert.innerHTML = `今は<strong>${NowPlayerFlag ? player2Name : player1Name}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
 }
-
 
 // サーバーから前の単語を取得し、表示を更新する関数
 async function fetchPreviousWord() {
@@ -127,7 +125,7 @@ window.onload = async (event) => {
 
 // ゲームリセットボタン押下時にリセット実行
 document.getElementById('gameResetbutton').addEventListener('click', async function () {
-
+    resetGame();
 });
 
 // 手札に追加ボタン押下時に実行
@@ -160,9 +158,30 @@ tefudaItems.forEach(function (item) {
     });
 });
 
-
+// 送信ボタン押下時に実行
 document.querySelector("#nextWordSendButton").addEventListener('click', async (event) => {
-    // 単語送信前のタイマーとダメージ計算
+    const nextWordInput = document.querySelector("#nextWordInput");
+    const nextWordInputText = nextWordInput.value;
+
+    // サーバーへの単語送信
+    const response = await fetch(
+        "/shiritori",
+        {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({nextWord: nextWordInputText})
+        }
+    );
+
+    if (response.status !== 200) {
+        const errorJson = await response.text();
+        const errorobj = JSON.parse(errorJson);
+        alert(errorobj["errorMessage"]);
+        nextWordInput.value = "";
+        return;  // エラーが発生した場合の処理
+    }
+
+    // 単語送信後のタイマーとダメージ計算
     const endTime = new Date();
     const elapsedTime = (endTime - startTime) / 1000; // 経過時間を秒単位で計算
     let damage = calculateDamage(elapsedTime);
@@ -185,26 +204,6 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async (e
     }
 
     updateHPDisplay();
-
-    // サーバーへの単語送信
-    const nextWordInput = document.querySelector("#nextWordInput");
-    const nextWordInputText = nextWordInput.value;
-    const response = await fetch(
-        "/shiritori",
-        {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({nextWord: nextWordInputText})
-        }
-    );
-
-    if (response.status !== 200) {
-        const errorJson = await response.text();
-        const errorobj = JSON.parse(errorJson);
-        alert(errorobj["errorMessage"]);
-        nextWordInput.value = "";
-        return;  // エラーが発生した場合の処理
-    }
 
     const previousWord = await response.text();
     document.querySelector("#previousWord").innerHTML = `前の単語: ${previousWord}`;
