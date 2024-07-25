@@ -94,6 +94,15 @@ https://bond-lab.github.io/wnja/jpn/downloads.html
 Japanese Wordnet
 https://bond-lab.github.io/wnja/index.en.html
 
+#### より厳密には
+オリジナルのWordNetはSQlite形式でそのままだと扱いづらいのでJSON形式に
+変換したものを利用しています。提供元のHiroki Oyaさんに感謝いたします。
+
+https://github.com/oyahiroki/nlp4j-resources/tree/main/wordnet
+
+
+
+
 
 
 
