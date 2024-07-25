@@ -16,7 +16,6 @@ let player1Name = "";
 let player2Name = "";
 
 
-
 // モーダルウィンドウ
 document.addEventListener('DOMContentLoaded', function　Show_modal () {
     // モーダルウィンドウの表示
