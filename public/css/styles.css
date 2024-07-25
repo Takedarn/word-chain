@@ -15,7 +15,24 @@ body {
     background: #f9f9f9;
 }
 
+h5 {
+    font-size: 15px;
+}
+
 /* モーダル外をクリックしても拡大しないようにする */
 .modal-static .modal-dialog {
     transform: scale(1) !important;
+}
+
+.col-md-6 {
+    padding: 3px;
+    margin: 0;
+}
+
+/* プログレスバーの設定 */
+
+
+.progress-bar {
+    background-color: #00a80e;
+    height: 100%;
 }
