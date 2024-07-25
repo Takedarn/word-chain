@@ -68,7 +68,12 @@ localhostにサーバが立ち上がるのでterminal内に表示されたリン
 
 #### ローカル環境では日本語辞書の会員登録(無料)が必要です。
 API Keyの取得が必要であり、そのためには会員登録をする必要があります。
+
 https://www.apibank.jp/ApiBank/service/use-guide#ugJoinStart
+
+APIには呼び出し制限があります。100回/日(or 1000回/月)をすぎるとAPIを使った判定はされなくなるので注意ください。
+<img width="1007" alt="API_status" src="https://github.com/user-attachments/assets/faa82ba9-1520-4146-afef-e2b06589e5bf">
+
 
 ## 参考にしたWebサイト
 - BootStrap document
