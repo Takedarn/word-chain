@@ -76,30 +76,9 @@ https://getbootstrap.jp/docs/4.2/getting-started/introduction/
 
 https://developer.mozilla.org/ja/docs/Web/JavaScript
 
-- 日本語WordNet
 
-https://bond-lab.github.io/wnja/jpn/downloads.html
 
 ## 謝辞
-このアプリを作成するにあたり、WordNetというデータベースを利用しました。
-このデータベースに
-- 57,238 概念 ; 
-- 93,834 語; 
-- 158,058 語義 (synsetと単語のペア)
-- 135,692 定義文; 
-- 48,276 例文
-
-が含まれています。多大なる貢献に感謝すると同時にここに提供元を明らかにさせていただきます。
-
-Japanese Wordnet
-https://bond-lab.github.io/wnja/index.en.html
-
-#### より厳密には
-オリジナルのWordNetはSQlite形式でそのままだと扱いづらいのでJSON形式に
-変換したものを利用しています。提供元のHiroki Oyaさんに感謝いたします。
-
-https://github.com/oyahiroki/nlp4j-resources/tree/main/wordnet
-
 
 
 
