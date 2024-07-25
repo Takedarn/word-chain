@@ -44,12 +44,13 @@ https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 
 -どのタイミングで手札を増やすのか(相手の手札を見ながら自らの手札を考える戦略が必要)
 
-#### 同義語辞書API
+#### WordNet(日本語)
 サンプルコードでは入力された単語が存在するかを判定しておらず、造語でも入力を許していた。
-そこで、同義語辞書API
-を利用することで入力単語が存在する単語かの判定を行った。このAPIでは入力された単語が存在している場合は、
-その単語の類義語をリストで返す。リストで返ってきたと言うことはその単語が辞書に登録されているとみなして
-入力フォームに入力された単語をしりとりゲームの入力として許すことを考えた。
+そこで、WordNetを利用することで入力単語が存在する単語かの判定を行った。WordNetは日本語の単語とその意味、
+同義語、反義語、語彙関係などを体系的に整理した辞書データベースである。
+入力された単語をWordNet内を探索し、類義語を見つける。
+類義語や意味が見つかったということは、その単語が日本語として認識され、辞書に登録されているとみなす。
+その場合、入力フォームに入力された単語をしりとりゲームの入力として許すことを考えた。
 
 
 ## アプリの動作確認の方法（WebサイトのURLや、セットアップを含めたアプリケーションの実行手順等
@@ -65,13 +66,6 @@ deno run --allow-net --watch server.js
 localhostにサーバが立ち上がるのでterminal内に表示されたリンクから開いて下さい。
 
 #### ローカル環境では日本語辞書の会員登録(無料)が必要です。
-API Keyの取得が必要であり、そのためには会員登録をする必要があります。
-
-https://www.apibank.jp/ApiBank/service/use-guide#ugJoinStart
-
-APIには呼び出し制限があります。100回/日(or 1000回/月)をすぎるとAPIを使った判定はされなくなるので注意ください。
-<img width="1007" alt="API_status" src="https://github.com/user-attachments/assets/faa82ba9-1520-4146-afef-e2b06589e5bf">
-
 
 ## 参考にしたWebサイト
 - BootStrap document
@@ -81,6 +75,23 @@ https://getbootstrap.jp/docs/4.2/getting-started/introduction/
 - Mozilla document(Java Script)
 
 https://developer.mozilla.org/ja/docs/Web/JavaScript
+
+- 日本語WordNet
+
+https://bond-lab.github.io/wnja/jpn/downloads.html
+
+# 謝辞
+このアプリを作成するにあたり、WordNetというデータベースを利用しました。
+このデータベースに
+- 57,238 概念 ; 
+- 93,834 語; 
+- 158,058 語義 (synsetと単語のペア)
+- 135,692 定義文; 
+- 48,276 例文
+
+が含まれています。多大なる貢献に感謝すると同時にここに提供元を明らかにさせていただきます。
+
+https://bond-lab.github.io/wnja/index.en.html
 
 
 
