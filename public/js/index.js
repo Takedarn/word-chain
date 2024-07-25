@@ -135,14 +135,16 @@ document.getElementById('addtoKeepingButton').addEventListener('click', function
     const nextWord = document.getElementById('nextWordInput').value.trim();
     if (nextWord) {
         const handList = NowPlayerFlag ? player1Hand : player2Hand;
-        // リストの先頭に新しい単語を追加
-        handList.unshift(nextWord);
-        // リストの長さが3つを超えた場合は、最も古い要素を削除する
-        if (handList.length > 3) {
-            handList.pop();
+        // リストの長さが3ついないの場合はリストの先頭に追加する
+        if (handList.length < 3) {
+            // リストの先頭に新しい単語を追加
+            handList.unshift(nextWord);
+        }　else {
+            alert("手札は3つまでしか追加できません")
         }
-        // 手札の表示を更新
+        // リストに追加したので入力フォームに入っている単語を消す
         document.getElementById('nextWordInput').value = '';
+        // 手札の表示を更新
         updatePlayerHand();
     }
 });
@@ -159,49 +161,86 @@ tefudaItems.forEach(function (item) {
 });
 
 
-// 送信ボタンのイベントリスナー
-document.getElementById('nextWordSendButton').addEventListener('click', () => {
+document.querySelector("#nextWordSendButton").addEventListener('click', async (event) => {
+    // 単語送信前のタイマーとダメージ計算
     const endTime = new Date();
     const elapsedTime = (endTime - startTime) / 1000; // 経過時間を秒単位で計算
     let damage = calculateDamage(elapsedTime);
 
+    // プレイヤーのHPを更新
     if (NowPlayerFlag) {
         player2HP -= damage;
         if (player2HP <= 0) {
             alert('プレイヤー2のHPが0になりました。プレイヤー1の勝利です！');
-            resetGame();
+            resetGame(true);
             return;
         }
     } else {
         player1HP -= damage;
         if (player1HP <= 0) {
             alert('プレイヤー1のHPが0になりました。プレイヤー2の勝利です！');
-            resetGame();
+            resetGame(true);
             return;
         }
     }
 
     updateHPDisplay();
-    startGame(); // 次のプレイヤーのターンのためにタイマーをリセット
+
+    // サーバーへの単語送信
+    const nextWordInput = document.querySelector("#nextWordInput");
+    const nextWordInputText = nextWordInput.value;
+    const response = await fetch(
+        "/shiritori",
+        {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({nextWord: nextWordInputText})
+        }
+    );
+
+    if (response.status !== 200) {
+        const errorJson = await response.text();
+        const errorobj = JSON.parse(errorJson);
+        alert(errorobj["errorMessage"]);
+        nextWordInput.value = "";
+        return;  // エラーが発生した場合の処理
+    }
+
+    const previousWord = await response.text();
+    document.querySelector("#previousWord").innerHTML = `前の単語: ${previousWord}`;
+    document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
+    nextWordInput.value = "";
+
+    // プレイヤーをトグル
+    NowPlayerFlag = !NowPlayerFlag;
+    updatePlayerTurnAlert();
+    updatePlayerHand();
+
+    // 次のターンのためにタイマーをリセット
+    startGame();
+
+    // デバッグ用の情報表示
+    const NowP = document.querySelector("#nowplayervalue");
+    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 });
 
 // ダメージを計算する関数
 function calculateDamage(elapsedTime) {
     if (elapsedTime <= 5) {
-        return 0;
+        return 0; // 5秒以内の送信で0ダメージ
     } else if (elapsedTime <= 10) {
-        return 1;
+        return 1;　//10秒以内の送信で1ダメージ
     } else if (elapsedTime <= 20) {
-        return 10;
+        return 10; // 20秒以内の送信で10ダメージ
     } else {
-        return 20;
+        return 20;　// それ以上の時間で20ダメージ
     }
 }
 
 
 
 // ゲームをリセットする関数
-async function resetGame() {
+async function resetGame(resetFlag = false) {
     // サーバーにリセットリクエストを送信
     await fetch("/reset", {method: "POST"});
     // 入力フォームの値をクリア
@@ -210,8 +249,10 @@ async function resetGame() {
     player1Hand.length = 0;
     player2Hand.length = 0;
     updatePlayerHand();
-    // リセットを通知する
-    alert('リセットボタンが押されたのでゲームをリセットします！');
+    if (!resetFlag) {
+        // リセットを通知する
+        alert('リセットボタンが押されたのでゲームをリセットします！');
+    }
     // ゲームプレイヤーのリセット
     NowPlayerFlag = false;
     // 表示をリセット
@@ -226,59 +267,3 @@ async function resetGame() {
 document.getElementById('gameResetbutton').addEventListener('click', () => {
     resetGame();
 });
-
-// 送信ボタン押下時に実行
-document.querySelector("#nextWordSendButton").onclick = async (event) => {
-    // inputタグを取得
-    const nextWordInput = document.querySelector("#nextWordInput");
-    // inputの中身を取得
-    const nextWordInputText = nextWordInput.value;
-
-    // プレイヤーをトグル
-    NowPlayerFlag = !NowPlayerFlag;
-    updatePlayerTurnAlert();
-
-    // debag:
-    const NowP = document.querySelector("#nowplayervalue");
-    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
-
-
-    // POST /shiritoriを実行
-    // 次の単語をresponseに格納
-    const response = await fetch(
-        "/shiritori",
-        {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({nextWord: nextWordInputText})
-        }
-    );
-
-    // status: 200以外が帰ってきた場合にエラーを表示し、プレイヤーを切り替えない
-    if (response.status !== 200) {
-        const errorJson = await response.text();
-        const errorobj = JSON.parse(errorJson);
-        alert(errorobj["errorMessage"]);
-        // 入力フォームを初期化する
-        nextWordInput.value = "";
-        return;  // ここで処理を終了し、プレイヤーの切り替えや手札の更新を行わない
-    }
-
-    const previousWord = await response.text();
-    document.querySelector("#previousWord").innerHTML = `前の単語: ${previousWord}`;
-    document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
-    nextWordInput.value = "";
-
-
-    // id: previousWordのタグを取得
-    const paragraph = document.querySelector("#previousWord");
-    // 取得したタグの中身を書き換える
-    paragraph.innerHTML = `前の単語: ${previousWord}`;
-
-    // id: nextWordHeadのタグ取得
-    const nextWord = document.querySelector("#nextWordHead");
-    // 取得したタグの中身を表示
-    nextWord.innerHTML = `次の先頭文字: ${previousWord.slice(-1)}`;
-    // inputタグの中身を消去する
-    nextWordInput.value = "";
-}
