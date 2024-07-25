@@ -91,6 +91,7 @@ https://bond-lab.github.io/wnja/jpn/downloads.html
 
 が含まれています。多大なる貢献に感謝すると同時にここに提供元を明らかにさせていただきます。
 
+Japanese Wordnet
 https://bond-lab.github.io/wnja/index.en.html
 
 
