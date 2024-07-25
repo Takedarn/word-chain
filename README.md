@@ -1,5 +1,5 @@
 # wordchain
-株式会社jig.jpが開催する2024年度サマーインターンシップに提出するための提出課題です。
+ゲーム戦略を追加したしりとりゲーム
 ## 使用技術
 ### 言語等
 - Javascript
@@ -60,7 +60,7 @@ https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
-リポジトリをクローンした後、ディレクトリ内で以下のコマンドを実行：
+リポジトリをクローンした後、server.jsが存在するディレクトリ内で以下のコマンドを実行：
 ```
 deno run --allow-net --watch server.js
 ```
