@@ -80,7 +80,7 @@ https://developer.mozilla.org/ja/docs/Web/JavaScript
 
 https://bond-lab.github.io/wnja/jpn/downloads.html
 
-# 謝辞
+## 謝辞
 このアプリを作成するにあたり、WordNetというデータベースを利用しました。
 このデータベースに
 - 57,238 概念 ; 
