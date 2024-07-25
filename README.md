@@ -60,7 +60,7 @@ https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
-リポジトリをクローンした後、ディレクトリ内で以下のコマンドを実行：
+リポジトリをクローンした後、server.jsが存在するディレクトリ内で以下のコマンドを実行：
 ```
 deno run --allow-net --watch server.js
 ```
