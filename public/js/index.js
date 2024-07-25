@@ -11,10 +11,39 @@ let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からス�
 const player1Hand = [];
 const player2Hand = [];
 
-// ページ作筋にモーダルウィンドウを表示する
-document.addEventListener('DOMContentLoaded', function () {
+// プレイヤーネームを保持する変数
+let player1Name = "";
+let player2Name = "";
+
+
+
+// モーダルウィンドウ
+document.addEventListener('DOMContentLoaded', function　Show_modal () {
+    // モーダルウィンドウの表示
     var myModal = new bootstrap.Modal(document.getElementById('myModal'));
     myModal.show();
+
+    // モーダルウィンドウないの入力チェック
+    document.getElementById('gameStartButton').addEventListener('click', function () {
+        const player1Name = document.getElementById('player1Name').value.trim();
+        const player2Name = document.getElementById('player2Name').value.trim();
+
+        if (player1Name && player2Name) {
+            // プレイヤー名を格納
+            localStorage.setItem('player1Name', player1Name);
+            localStorage.setItem('player2Name', player2Name);
+
+            // モーダルウィンドウを閉じる
+            myModal.hide();
+            // 背景を消すための処理
+            document.querySelector('.modal-backdrop').remove();
+
+            // プレイヤー名を表示
+            updatePlayerTurnAlert();
+        } else {
+            alert('プレイヤー名を入力してください。');　// 入力を再度促す
+        }
+    });
 });
 
 // 手札の表示を更新する関数
@@ -34,7 +63,9 @@ function updatePlayerHand() {
 // プレイヤー表示を更新する関数
 function updatePlayerTurnAlert() {
     const playerTurnAlert = document.getElementById('NowGamePlayer');
-    playerTurnAlert.innerHTML = `今は<strong>プレイヤー${NowPlayerFlag ? 2 : 1}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+    const player1Name = localStorage.getItem('player1Name') || 'プレイヤー1';
+    const player2Name = localStorage.getItem('player2Name') || 'プレイヤー2';
+    playerTurnAlert.innerHTML = `今は<strong>${NowPlayerFlag ? player2Name : player1Name}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
 }
 
 
@@ -90,6 +121,9 @@ document.getElementById('gameResetbutton').addEventListener('click', async funct
     document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
     document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
     updatePlayerTurnAlert();
+    // ページのリロード
+    location.reload();
+
 
 
     // debag:
