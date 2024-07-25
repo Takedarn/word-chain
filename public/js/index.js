@@ -3,6 +3,13 @@
 // false = プレイヤー1, true = プレイヤー2
 let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からスタートする
 
+// プレイヤー各人のHPを保持する変数
+let player1HP = 100;
+let player2HP = 100;
+
+// 単語を送信するまでにかかった時間を測るタイマー
+let startTime;
+
 // プレイヤーごとの手札を保持する変数
 const player1Hand = [];
 const player2Hand = [];
@@ -10,6 +17,8 @@ const player2Hand = [];
 // プレイヤーネームを保持する変数
 let player1Name = "";
 let player2Name = "";
+
+
 
 
 // モーダルウィンドウ
@@ -20,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function Show_modal() {
 
     // モーダルウィンドウないの入力チェック
     document.getElementById('gameStartButton').addEventListener('click', function () {
+        player1HP = 100;
+        player2HP = 100;
+
         const player1Name = document.getElementById('player1Name').value.trim();
         const player2Name = document.getElementById('player2Name').value.trim();
 
@@ -35,11 +47,27 @@ document.addEventListener('DOMContentLoaded', function Show_modal() {
 
             // プレイヤー名を表示
             updatePlayerTurnAlert();
+            updateHPDisplay();
+            NowPlayerFlag = false;
+            startGame();
         } else {
             alert('プレイヤー名を入力してください。');　// 入力を再度促す
         }
     });
 });
+
+// ゲーム開始時の処理
+function startGame() {
+    startTime = new Date();
+    // その他の初期化処理があればここに追加
+}
+
+
+// HP表示を更新する関数
+function updateHPDisplay() {
+    document.getElementById('player1HP').innerText = `プレイヤー1のHP: ${player1HP}`;
+    document.getElementById('player2HP').innerText = `プレイヤー2のHP: ${player2HP}`;
+}
 
 // 手札の表示を更新する関数
 function updatePlayerHand() {
@@ -84,7 +112,6 @@ window.onload = async (event) => {
     const NowP = document.querySelector("#nowplayervalue");
     NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 
-
     // responseの中からレスポンスのテキストデータを取得
     const previousWord = await response.text();
     // id: previousWordのタグを取得
@@ -100,29 +127,7 @@ window.onload = async (event) => {
 
 // ゲームリセットボタン押下時にリセット実行
 document.getElementById('gameResetbutton').addEventListener('click', async function () {
-    // サーバーにリセットリクエストを送信
-    await fetch("/reset", {method: "POST"});
-    // 入力フォームの値をクリア
-    document.getElementById('nextWordInput').value = "";
-    // 手札の初期化
-    player1Hand.length = 0;
-    player2Hand.length = 0;
-    updatePlayerHand();
-    // リセットを通知する
-    alert('リセットボタンが押されたのでゲームをリセットします！');
-    // ゲームプレイヤーのリセット
-    NowPlayerFlag = false;
-    // 表示をリセット
-    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
-    document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
-    updatePlayerTurnAlert();
-    // ページのリロード
-    location.reload();
 
-
-    // debag:
-    const NowP = document.querySelector("#nowplayervalue");
-    NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 });
 
 // 手札に追加ボタン押下時に実行
@@ -153,6 +158,74 @@ tefudaItems.forEach(function (item) {
     });
 });
 
+
+// 送信ボタンのイベントリスナー
+document.getElementById('nextWordSendButton').addEventListener('click', () => {
+    const endTime = new Date();
+    const elapsedTime = (endTime - startTime) / 1000; // 経過時間を秒単位で計算
+    let damage = calculateDamage(elapsedTime);
+
+    if (NowPlayerFlag) {
+        player2HP -= damage;
+        if (player2HP <= 0) {
+            alert('プレイヤー2のHPが0になりました。プレイヤー1の勝利です！');
+            resetGame();
+            return;
+        }
+    } else {
+        player1HP -= damage;
+        if (player1HP <= 0) {
+            alert('プレイヤー1のHPが0になりました。プレイヤー2の勝利です！');
+            resetGame();
+            return;
+        }
+    }
+
+    updateHPDisplay();
+    startGame(); // 次のプレイヤーのターンのためにタイマーをリセット
+});
+
+// ダメージを計算する関数
+function calculateDamage(elapsedTime) {
+    if (elapsedTime <= 5) {
+        return 0;
+    } else if (elapsedTime <= 10) {
+        return 1;
+    } else if (elapsedTime <= 20) {
+        return 10;
+    } else {
+        return 20;
+    }
+}
+
+
+
+// ゲームをリセットする関数
+async function resetGame() {
+    // サーバーにリセットリクエストを送信
+    await fetch("/reset", {method: "POST"});
+    // 入力フォームの値をクリア
+    document.getElementById('nextWordInput').value = "";
+    // 手札の初期化
+    player1Hand.length = 0;
+    player2Hand.length = 0;
+    updatePlayerHand();
+    // リセットを通知する
+    alert('リセットボタンが押されたのでゲームをリセットします！');
+    // ゲームプレイヤーのリセット
+    NowPlayerFlag = false;
+    // 表示をリセット
+    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
+    document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
+    updatePlayerTurnAlert();
+    // ページのリロード
+    location.reload();
+}
+
+// ゲームリセットボタンのイベントリスナー
+document.getElementById('gameResetbutton').addEventListener('click', () => {
+    resetGame();
+});
 
 // 送信ボタン押下時に実行
 document.querySelector("#nextWordSendButton").onclick = async (event) => {
