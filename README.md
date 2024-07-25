@@ -12,8 +12,6 @@
 
 https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 
-### フォント
-
 
 ## 実装した機能やデザインの説明
 ### 最低限満たすべき仕様
