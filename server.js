@@ -1,5 +1,6 @@
 import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
+
 // 直前の単語を保持しておくリスト
 let previousWords = ["しりとり"]
 
@@ -51,6 +52,7 @@ Deno.serve(async (request) => {
         let nextWord = requestJson["nextWord"];
         let previousWordLastChar = previousWords[previousWords.length - 1].slice(-1);
         let nextWordFirstChar = nextWord.slice(0, 1);
+
 
         // 　濁音および半濁音チェック
         let allowedChars = [previousWordLastChar];

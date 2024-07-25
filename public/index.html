@@ -3,7 +3,13 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="tools/kuromoji.js/build/kuromoji.js"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -79,5 +85,27 @@
 </div>
 <!--JSファイルを外部ファイルとして読み込む-->
 <script src="js/index.js"></script>
+
+
+
+<script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+</script>
+<script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyBJFrh47ZTNdT7RIA1WwBxygHRdBspQCZ8";
+    // Reminder: This should only be for local testing
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    // ...
+    // The Gemini 1.5 models are versatile and work with most use cases
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    // ...
+</script>
 </body>
 </html>

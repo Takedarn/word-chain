@@ -8,10 +8,6 @@
 - Deno
 - Bootstrap
 ### API等
-単語 日英／英日辞書 (WordNet)
-
-https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
-
 
 ## 実装した機能やデザインの説明
 ### 最低限満たすべき仕様
@@ -44,17 +40,6 @@ https://www.apibank.jp/ApiBank/api/detail?api_no=31&api_type=A
 
 -どのタイミングで手札を増やすのか(相手の手札を見ながら自らの手札を考える戦略が必要)
 
-#### Google AI APIを使った単語判定
-サンプルコードでは入力された単語が存在するかを判定しておらず、造語でも入力を許していた。
-そこで、Google-APIを利用することで入力単語が存在する単語かの判定を行った。
-入力された単語をGoogle-AI APIを利用し、言語モデルにプロンプトを投げることで日本語判定を見つける。
-回答を2値[Positive | False]で返答させている。
-入力フォームに入力された単語をしりとりゲームの入力として許すことを考えた。
-なお、言語モデルの精度によっては間違えたりする場合があることに注意。<br>
-<strong>(注)この機能は実験機機能なので精度がよくないかもしれない。</strong><br>
-<strong>モードを切り替えるとひらがなであれば全ての入力を許可する。</strong><br>
-
-
 
 ## アプリの動作確認の方法（WebサイトのURLや、セットアップを含めたアプリケーションの実行手順等
 ### ローカル環境への動かし方
@@ -78,8 +63,6 @@ https://getbootstrap.jp/docs/4.2/getting-started/introduction/
 - Mozilla document(Java Script)
 
 https://developer.mozilla.org/ja/docs/Web/JavaScript
-
-
 
 ## 謝辞
 

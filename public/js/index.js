@@ -1,8 +1,4 @@
 // 変数定義
-// 入力時間を記録するためのタイマー
-let timer;
-let startTime;
-
 // プレイヤー情報を保持するための変数定義
 // false = プレイヤー1, true = プレイヤー2
 let NowPlayerFlag = false; //　ゲーム起動時はプレイヤー1からスタートする
@@ -17,9 +13,9 @@ let player2Name = "";
 
 
 // モーダルウィンドウ
-document.addEventListener('DOMContentLoaded', function　Show_modal () {
+document.addEventListener('DOMContentLoaded', function Show_modal() {
     // モーダルウィンドウの表示
-    var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    const myModal = new bootstrap.Modal(document.getElementById('myModal'));
     myModal.show();
 
     // モーダルウィンドウないの入力チェック
@@ -70,7 +66,7 @@ function updatePlayerTurnAlert() {
 
 // サーバーから前の単語を取得し、表示を更新する関数
 async function fetchPreviousWord() {
-    const response = await fetch("/shiritori", { method: "GET" });
+    const response = await fetch("/shiritori", {method: "GET"});
     const previousWord = await response.text();
     document.querySelector("#previousWord").innerText = `前の単語: ${previousWord}`;
     document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
@@ -82,7 +78,7 @@ window.onload = async () => {
 
 window.onload = async (event) => {
     // GET /shiritoriを実行
-    const response = await fetch("/shiritori", { method: "GET" });
+    const response = await fetch("/shiritori", {method: "GET"});
 
     // debag:
     const NowP = document.querySelector("#nowplayervalue");
@@ -103,9 +99,9 @@ window.onload = async (event) => {
 }
 
 // ゲームリセットボタン押下時にリセット実行
-document.getElementById('gameResetbutton').addEventListener('click', async function() {
+document.getElementById('gameResetbutton').addEventListener('click', async function () {
     // サーバーにリセットリクエストを送信
-    await fetch("/reset", { method: "POST" });
+    await fetch("/reset", {method: "POST"});
     // 入力フォームの値をクリア
     document.getElementById('nextWordInput').value = "";
     // 手札の初期化
@@ -124,14 +120,13 @@ document.getElementById('gameResetbutton').addEventListener('click', async funct
     location.reload();
 
 
-
     // debag:
     const NowP = document.querySelector("#nowplayervalue");
     NowP.innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 });
 
 // 手札に追加ボタン押下時に実行
-document.getElementById('addtoKeepingButton').addEventListener('click', function() {
+document.getElementById('addtoKeepingButton').addEventListener('click', function () {
     const nextWord = document.getElementById('nextWordInput').value.trim();
     if (nextWord) {
         const handList = NowPlayerFlag ? player1Hand : player2Hand;
@@ -149,8 +144,8 @@ document.getElementById('addtoKeepingButton').addEventListener('click', function
 
 // 手札リストの要素をクリックしたときに、そのテキストを入力フォームに挿入する
 const tefudaItems = document.querySelectorAll('.list-group-item');
-tefudaItems.forEach(function(item) {
-    item.addEventListener('click', function() {
+tefudaItems.forEach(function (item) {
+    item.addEventListener('click', function () {
         const tefudaText = this.innerText;
         if (!tefudaText.includes('ここに手札をセットできます')) {
             document.getElementById('nextWordInput').value = tefudaText;
@@ -160,7 +155,7 @@ tefudaItems.forEach(function(item) {
 
 
 // 送信ボタン押下時に実行
-document.querySelector("#nextWordSendButton").onclick = async(event) => {
+document.querySelector("#nextWordSendButton").onclick = async (event) => {
     // inputタグを取得
     const nextWordInput = document.querySelector("#nextWordInput");
     // inputの中身を取得
@@ -181,8 +176,8 @@ document.querySelector("#nextWordSendButton").onclick = async(event) => {
         "/shiritori",
         {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nextWord: nextWordInputText })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({nextWord: nextWordInputText})
         }
     );
 
