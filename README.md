@@ -56,15 +56,15 @@ localhostにサーバが立ち上がるのでterminal内に表示されたリン
 #### ローカル環境では日本語辞書の会員登録(無料)が必要です。
 
 ## 参考にしたWebサイト
-- BootStrap document
-
+### 公式ドキュメント
+- BootStrap document: 
 https://getbootstrap.jp/docs/4.2/getting-started/introduction/
 
-- Mozilla document(Java Script)
-
+- Mozilla document(Java Script): 
 https://developer.mozilla.org/ja/docs/Web/JavaScript
 
-## 謝辞
+- Deno Doc: https://doc.deno.land/ 
+### 有志記事/ブログ等
 
 
 
