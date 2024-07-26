@@ -51,19 +51,21 @@ document.addEventListener('DOMContentLoaded', function () {
 // =============================
 // ゲーム開始時の処理
 // =============================
+//　ゲームをスタートさせる
 function startGame() {
     startTime = new Date();
-    // その他の初期化処理があればここに追加
 }
 
 // =============================
 // ゲーム状態の更新関数
 // =============================
+// HPを更新する
 function updateHPDisplay() {
     document.getElementById('player1HP').innerText = `プレイヤー1のHP: ${player1HP}`;
     document.getElementById('player2HP').innerText = `プレイヤー2のHP: ${player2HP}`;
 }
 
+// プレイヤーの手札を更新する
 function updatePlayerHand() {
     const handList = NowPlayerFlag ? player2Hand : player1Hand;
     const handElements = document.querySelectorAll(`#player${NowPlayerFlag ? 2 : 1}-hand .list-group-item`);
@@ -76,6 +78,7 @@ function updatePlayerHand() {
     document.getElementById('player2-hand').classList.toggle('d-none', !NowPlayerFlag);
 }
 
+// プレイヤーの手札を切り替える
 function updatePlayerTurnAlert() {
     const playerTurnAlert = document.getElementById('NowGamePlayer');
     const player1Name = localStorage.getItem('player1Name') || 'プレイヤー1';
@@ -83,12 +86,14 @@ function updatePlayerTurnAlert() {
     playerTurnAlert.innerHTML = `今は<strong>${NowPlayerFlag ? player2Name : player1Name}</strong>のゲームターンです！<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
 }
 
+// 前の単語を引き出す
 async function fetchPreviousWord() {
     const response = await fetch("/shiritori", {method: "GET"});
     const previousWord = await response.text();
     document.querySelector("#previousWord").innerText = `前の単語: ${previousWord}`;
     document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
 }
+
 
 window.onload = async () => {
     await fetchPreviousWord();
@@ -97,6 +102,7 @@ window.onload = async () => {
 // =============================
 // イベントリスナー
 // =============================
+//　手札に追加ボタン押下時に実行
 document.getElementById('addtoKeepingButton').addEventListener('click', () => {
     const nextWord = document.getElementById('nextWordInput').value.trim();
     if (nextWord) {
@@ -111,6 +117,7 @@ document.getElementById('addtoKeepingButton').addEventListener('click', () => {
     }
 });
 
+//　手札から単語を召喚する
 document.querySelectorAll('.list-group-item').forEach(item => {
     item.addEventListener('click', function () {
         const tefudaText = this.innerText;
@@ -120,6 +127,7 @@ document.querySelectorAll('.list-group-item').forEach(item => {
     });
 });
 
+//　送信ボタン押下時に実行する
 document.querySelector("#nextWordSendButton").addEventListener('click', async () => {
     const nextWordInput = document.querySelector("#nextWordInput");
     const nextWordInputText = nextWordInput.value;
@@ -175,6 +183,7 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
 // =============================
 // ゲームロジック関数
 // =============================
+//　ダメージ計算する
 function calculateDamage(elapsedTime) {　// 単語を入力する時間に応じたダメージを自らに加える
     if (elapsedTime <= 5) {
         return 0; // 5秒以内の送信で0ダメージ
@@ -190,6 +199,7 @@ function calculateDamage(elapsedTime) {　// 単語を入力する時間に応�
 // =============================
 // ゲームリセット関数
 // =============================
+//　ゲームをリセットするための関数
 async function resetGame(resetFlag = false) {
     await fetch("/reset", {method: "POST"});
     document.getElementById('nextWordInput').value = "";
