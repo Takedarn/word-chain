@@ -170,8 +170,6 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
     updatePlayerHand();
 
     startGame();
-
-    document.querySelector("#nowplayervalue").innerHTML = `(デバッグ用)現在のプレイヤ変数の値：${NowPlayerFlag}`;
 });
 
 // =============================
