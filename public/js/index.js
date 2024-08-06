@@ -139,10 +139,40 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
         body: JSON.stringify({nextWord: nextWordInputText})
     });
 
+    // レスポンスがエラーの時
+    // エラーコードによって処理を変える
     if (response.status !== 200) {
         const errorJson = await response.text();
         const errorobj = JSON.parse(errorJson);
-        alert(errorobj["errorMessage"]);
+        const errorCode = errorobj["errorCode"];
+        
+        switch(errorCode) {
+            case "10001":
+                // 入力が空なので再度入力を促す。
+                alert("入力が空です。単語を入力してください。");
+                break;
+            case "10002":
+                // 末尾が「ん」で終わるのでゲームオーバーにする
+                alert("末尾が「ん」です。ゲームオーバー！");
+                resetGame(true);
+                break;
+            case "10003":
+                // 入力はひらがなのみ受け付けるので再度入力を促す
+                alert("入力はひらがなのみにしてください。");
+                break;
+            case "10004":
+                // この単語は既に使われているのでゲームオーバーにする
+                alert("使用済みの単語です。ゲームオーバー！");
+                resetGame(true);
+                break;
+            case "10005":
+                // 前の単語に続いていないので再度入力を促す
+                alert("前の単語に続いていません！");
+                break;
+            default:
+                alert(errorobj["errorMessage"]);
+        }
+        
         nextWordInput.value = "";
         return;
     }

@@ -41,7 +41,7 @@ Deno.serve(async (request) => {
         if (nextWord.trim() === "") {
             return new Response(
                 JSON.stringify({
-                    "errorMessage": "入力が空です。単語を入力してください。",
+                    "errorMessage": "",
                     "errorCode": "10001",
                 }),
                 {
@@ -58,7 +58,7 @@ Deno.serve(async (request) => {
             if (nextWord.slice(-1) === "ん") {
                 return new Response(
                     JSON.stringify({
-                        "errorMessage": "末尾が「ん」です。ゲームオーバー！",
+                        "errorMessage": "",
                         "errorCode": "10002",
                     }),
                     {
@@ -72,7 +72,7 @@ Deno.serve(async (request) => {
             if (!nextWord.match(/^[ぁ-んー]+$/)) {
                 return new Response(
                     JSON.stringify({
-                        "errorMessage": "入力はひらがなのみにしてください。",
+                        "errorMessage": "",
                         "errorCode": "10003",
                     }),
                     {
@@ -107,8 +107,8 @@ Deno.serve(async (request) => {
             // previousWordの末尾とNextWordの先頭の一文字が一致しない場合
             return new Response(
                 JSON.stringify({
-                    "errorMessage": `前の単語に続いていません！`,
-                    "errorCode": "10001",
+                    "errorMessage": "",
+                    "errorCode": "10005",
                 }),
                 {
                     status: 400,
