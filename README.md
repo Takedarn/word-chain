@@ -62,16 +62,16 @@
 
 https://harukitaked-word-chain-h6sgp7c1mqr2.deno.dev/
 ### ローカル環境への動かし方
-#### Denoのインストール
+#### 1. Denoのインストール
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
-#### インストール完了時の表示にしたがって.bashrcなどに設定をする必要があります
+#### 2. インストール完了時の表示にしたがって.bashrcなどに設定をする必要があります
 ```
 export DENO_INSTALL="/c/Users/<User name>/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 ```
-リポジトリをクローンした後、server.jsが存在するディレクトリ内で以下のコマンドを実行：
+#### 3. リポジトリをクローンした後、server.jsが存在するディレクトリ内で以下のコマンドを実行：
 ```
 deno run --allow-net --watch server.js
 ```
