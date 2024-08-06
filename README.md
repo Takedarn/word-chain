@@ -68,7 +68,8 @@
 ### デプロイ先
 基本的には以下のリンクで利用できます
 
-https://harukitaked-word-chain-h6sgp7c1mqr2.deno.dev/
+https://harukitaked-word-chain.deno.dev/
+
 ### ローカル環境への動かし方
 #### 1. Denoのインストール
 ```
