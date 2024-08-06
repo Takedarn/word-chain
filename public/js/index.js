@@ -2,13 +2,14 @@
 // プレイヤー情報の保持
 // =============================
 let NowPlayerFlag = false; // ゲーム起動時はプレイヤー1からスタート
-let player1HP = 100;
-let player2HP = 100;
-let startTime;
-const player1Hand = [];
-const player2Hand = [];
-let player1Name = "";
-let player2Name = "";
+let player1HP = 100;       // プレイヤー1のHP
+let player2HP = 100;       // プレイヤー1のHP
+let startTime;             // 入力が完了するまでの時間を図るタイマー 
+const player1Hand = [];    //　プレイヤー2の手札
+const player2Hand = [];    //　プレイヤー2の手札
+let player1Name = "";      //　プレイヤー1の名前
+let player2Name = "";      // プレイヤー2の手札
+
 
 // =============================
 // DOMの読み込み完了時の処理
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
 // =============================
 // ゲーム開始時の処理
 // =============================
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function startGame() {
     startTime = new Date();
 }
+
 
 // =============================
 // ゲーム状態の更新関数
@@ -98,6 +101,7 @@ async function fetchPreviousWord() {
 window.onload = async () => {
     await fetchPreviousWord();
 }
+
 
 // =============================
 // イベントリスナー
