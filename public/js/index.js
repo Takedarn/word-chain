@@ -171,8 +171,7 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
                 break;
             default:
                 alert(errorobj["errorMessage"]);
-        }
-        
+        }  
         nextWordInput.value = "";
         return;
     }
