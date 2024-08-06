@@ -1,5 +1,5 @@
 // =============================
-// プレイヤー情報の保持
+// プレイヤー情報を保持する変数宣言
 // =============================
 let NowPlayerFlag = false; // ゲーム起動時はプレイヤー1からスタート
 let player1HP = 100;       // プレイヤー1のHP
@@ -12,7 +12,7 @@ let player2Name = "";      // プレイヤー2の手札
 
 
 // =============================
-// DOMの読み込み完了時の処理
+// DOM読み込み完了時の処理
 // =============================
 document.addEventListener('DOMContentLoaded', function () {
     // モーダルウィンドウの表示
@@ -59,7 +59,7 @@ function startGame() {
 }
 
 // =============================
-// ゲーム状態の更新関数
+// ゲーム状態を更新するための関数
 // =============================
 // HPを更新する
 function updateHPDisplay() {
@@ -111,7 +111,7 @@ document.getElementById('addtoKeepingButton').addEventListener('click', () => {
         if (handList.length < 3) {
             handList.unshift(nextWord);
         } else {
-            alert("手札は3つまでしか追加できません");
+            alert("手札は3つまでです!");
         }
         document.getElementById('nextWordInput').value = '';
         updatePlayerHand();
@@ -122,7 +122,7 @@ document.getElementById('addtoKeepingButton').addEventListener('click', () => {
 document.querySelectorAll('.list-group-item').forEach(item => {
     item.addEventListener('click', function () {
         const tefudaText = this.innerText;
-        if (!tefudaText.includes('ここに手札をセットできます')) {
+        if (!tefudaText.includes('入力した単語を手札をセットできます')) {
             document.getElementById('nextWordInput').value = tefudaText;
         }
     });
@@ -210,7 +210,6 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
     NowPlayerFlag = !NowPlayerFlag;
     updatePlayerTurnAlert();
     updatePlayerHand();
-
     // ゲームスタート画面に遷移する
     startGame();
 });
