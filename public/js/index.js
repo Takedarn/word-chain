@@ -215,7 +215,7 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
 });
 
 // =============================
-// ゲームロジック関数
+// ゲームのロジック関数
 // =============================
 // // 単語を入力する時間に応じたダメージを自らに加えるための関数
 function calculateDamage(elapsedTime) { 
