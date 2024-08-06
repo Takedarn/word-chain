@@ -29,10 +29,7 @@ h5 {
     margin: 0;
 }
 
-/* プログレスバーの設定 */
 
-
-.progress-bar {
-    background-color: #00a80e;
-    height: 100%;
+#resetModal {
+    display: block;
 }

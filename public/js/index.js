@@ -58,7 +58,6 @@ function startGame() {
     startTime = new Date();
 }
 
-
 // =============================
 // ゲーム状態の更新関数
 // =============================
@@ -121,7 +120,7 @@ document.getElementById('addtoKeepingButton').addEventListener('click', () => {
     }
 });
 
-//　手札から単語を召喚する
+//　手札から単語を入力フォームに移動する
 document.querySelectorAll('.list-group-item').forEach(item => {
     item.addEventListener('click', function () {
         const tefudaText = this.innerText;
@@ -170,25 +169,28 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
         }
     }
 
+    // HPの表示を更新する
     updateHPDisplay();
-
+    // 入力フォームに入力された単語を取得する
     const previousWord = await response.text();
     document.querySelector("#previousWord").innerHTML = `前の単語: ${previousWord}`;
     document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
+    // 入力フォームの値を空にする
     nextWordInput.value = "";
-
+    // プレイヤーに関する状態をリセットする
     NowPlayerFlag = !NowPlayerFlag;
     updatePlayerTurnAlert();
     updatePlayerHand();
 
+    // ゲームスタート画面に遷移する
     startGame();
 });
 
 // =============================
 // ゲームロジック関数
 // =============================
-//　ダメージ計算する
-function calculateDamage(elapsedTime) {　// 単語を入力する時間に応じたダメージを自らに加える
+// // 単語を入力する時間に応じたダメージを自らに加えるための関数
+function calculateDamage(elapsedTime) { 
     if (elapsedTime <= 5) {
         return 0; // 5秒以内の送信で0ダメージ
     } else if (elapsedTime <= 10) {
@@ -211,7 +213,7 @@ async function resetGame(resetFlag = false) {
     player2Hand.length = 0;
     updatePlayerHand();
     if (!resetFlag) {
-        alert('リセットボタンが押されたのでゲームをリセットします！');
+        alert('リセットボタンが押されたのでリセットします');
     }
     NowPlayerFlag = false;
     document.getElementById('previousWord').innerHTML = "前の単語: しりとり";

@@ -66,13 +66,17 @@ https://harukitaked-word-chain-h6sgp7c1mqr2.deno.dev/
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
+#### インストール完了時の表示にしたがって.bashrcなどに設定をする必要があります
+```
+export DENO_INSTALL="/c/Users/<User name>/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+```
 リポジトリをクローンした後、server.jsが存在するディレクトリ内で以下のコマンドを実行：
 ```
 deno run --allow-net --watch server.js
 ```
 localhostにサーバが立ち上がるのでterminal内に表示されたリンクから開いて下さい。
 
-#### ローカル環境では日本語辞書の会員登録(無料)が必要です。
 
 ## 参考にしたWebサイト
 ### 公式ドキュメント
@@ -83,8 +87,6 @@ https://getbootstrap.jp/docs/4.2/getting-started/introduction/
 https://developer.mozilla.org/ja/docs/Web/JavaScript
 
 - Deno Doc: https://doc.deno.land/ 
-### 有志記事/ブログ等
-
 
 
 
