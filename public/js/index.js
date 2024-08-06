@@ -118,6 +118,7 @@ document.getElementById('addtoKeepingButton').addEventListener('click', () => {
     }
 });
 
+
 //　手札から単語を入力フォームに移動する
 document.querySelectorAll('.list-group-item').forEach(item => {
     item.addEventListener('click', function () {
@@ -179,8 +180,8 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
     // レスポンスが成功時の処理
     // プレイヤーが単語送信までにかかった時間を図ってダメージ計算する
     const endTime = new Date();
-    const elapsedTime = (endTime - startTime) / 1000;
-    let damage = calculateDamage(elapsedTime);
+    const elapsedTime = (endTime - startTime) / 1000; // 差をとって経過時間を秒単位で図る
+    let damage = calculateDamage(elapsedTime); // 経過時間をもとのダメージを与える
     // ダメージを与えて0になったらゲーム終了
     if (NowPlayerFlag) {
         player2HP -= damage;
