@@ -42,7 +42,7 @@ Deno.serve(async (request) => {
             return new Response(
                 JSON.stringify({
                     "errorMessage": "入力が空です。単語を入力してください。",
-                    "errorCode": "10003",
+                    "errorCode": "10001",
                 }),
                 {
                     status: 400,
@@ -59,7 +59,7 @@ Deno.serve(async (request) => {
                 return new Response(
                     JSON.stringify({
                         "errorMessage": "末尾が「ん」です。ゲームオーバー！",
-                        "errorCode": "10001",
+                        "errorCode": "10002",
                     }),
                     {
                         status: 400,
@@ -73,7 +73,7 @@ Deno.serve(async (request) => {
                 return new Response(
                     JSON.stringify({
                         "errorMessage": "入力はひらがなのみにしてください。",
-                        "errorCode": "10001",
+                        "errorCode": "10003",
                     }),
                     {
                         status: 400,
@@ -87,11 +87,12 @@ Deno.serve(async (request) => {
                 // ゲームオーバーなのでしりとりの履歴リストを初期化
                 previousWords = ["しりとり"];
 
+
                 return new Response(
                     JSON.stringify({
                         "errorMessage": "この単語は既に使われています。ゲームオーバー！" +
                             "ゲームを最初にリセットします",
-                        "errorCode": "10002",
+                        "errorCode": "10004",
                     }),
                     {
                         status: 400,

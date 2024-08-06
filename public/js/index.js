@@ -96,11 +96,9 @@ async function fetchPreviousWord() {
     document.getElementById('nextWordInput').placeholder = `次の先頭文字: ${previousWord.slice(-1)}`;
 }
 
-
 window.onload = async () => {
     await fetchPreviousWord();
 }
-
 
 // =============================
 // イベントリスナー
@@ -149,10 +147,12 @@ document.querySelector("#nextWordSendButton").addEventListener('click', async ()
         return;
     }
 
+    // レスポンスが成功時の処理
+    // プレイヤーが単語送信までにかかった時間を図ってダメージ計算する
     const endTime = new Date();
     const elapsedTime = (endTime - startTime) / 1000;
     let damage = calculateDamage(elapsedTime);
-
+    // ダメージを与えて0になったらゲーム終了
     if (NowPlayerFlag) {
         player2HP -= damage;
         if (player2HP <= 0) {
@@ -211,13 +211,13 @@ async function resetGame(resetFlag = false) {
     document.getElementById('nextWordInput').value = "";
     player1Hand.length = 0;
     player2Hand.length = 0;
+    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
+    document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
     updatePlayerHand();
     if (!resetFlag) {
         alert('リセットボタンが押されたのでリセットします');
     }
     NowPlayerFlag = false;
-    document.getElementById('previousWord').innerHTML = "前の単語: しりとり";
-    document.getElementById('nextWordInput').placeholder = "次の先頭文字: り";
     updatePlayerTurnAlert();
     location.reload();
 }
